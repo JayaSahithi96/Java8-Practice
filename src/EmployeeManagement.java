@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 class EmployeeManagement {
@@ -22,12 +23,25 @@ class details {
     public static void main(String[] args) {
         ArrayList<EmployeeManagement> l = new ArrayList<EmployeeManagement>();
         populate(l);
+        System.out.println("Salary before increment" +l);
         Predicate<EmployeeManagement> p1= emp->emp.designation.equals("Manager");
         System.out.println("Manager's information:");
         display(p1,l);
         Predicate<EmployeeManagement> p2= emp->emp.city.equals("Sacramento");
         System.out.println("Employee info from sacramento");
         display(p2,l);
+        Predicate<EmployeeManagement> p3=e->e.salary<=3000;
+        Function<EmployeeManagement,EmployeeManagement> f= e->{
+                e.salary=e.salary+1000;
+                return e;
+        };
+        ArrayList<EmployeeManagement> l1= new ArrayList<EmployeeManagement>();
+        for(EmployeeManagement e:l){
+            if(p3.test(e)){
+                l1.add(f.apply(e));
+                System.out.println(e);
+            }
+        }
     }
 
     public static void populate(ArrayList<EmployeeManagement> l) {
